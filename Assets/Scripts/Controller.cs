@@ -43,10 +43,10 @@ public class Controller : MonoBehaviour {
 
 	void FixedUpdate() {
 
-		Run ();
+		Move ();
 	}
 
-	void Run() {
+	void Move() {
 		if (Mathf.Abs(forwardInput) > inputDelay) {
 			//move
 			rBody.velocity = transform.forward * forwardInput * forwardVel;
@@ -57,11 +57,14 @@ public class Controller : MonoBehaviour {
 		}
 	}
 
-	void Turn() {
-		if (Mathf.Abs (turnInput) > inputDelay) {
-			targetRotation *= Quaternion.AngleAxis (rotateVel * turnInput * Time.deltaTime, Vector3.up);
-		}
-		transform.rotation = targetRotation;
+    void Turn() {
+        if (rBody.velocity != Vector3.zero)
+        { 
+            if (Mathf.Abs(turnInput) > inputDelay) {
+                targetRotation *= Quaternion.AngleAxis(rotateVel * turnInput * Time.deltaTime, Vector3.up);
+            }
+        transform.rotation = targetRotation;
+        }
 	}
 
 
