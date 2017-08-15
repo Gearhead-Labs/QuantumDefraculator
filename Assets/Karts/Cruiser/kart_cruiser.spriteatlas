@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: kart_cruiser
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      colorSpace: 1
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 99c5cce7d98374aef45bf13ee4ee7d06
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: 99c5cce7d98374aef45bf13ee4ee7d06
+    totalSpriteSurfaceArea: 2530656
+    packables:
+    - {fileID: 102900000, guid: 75ce1a8be8d7e40898a67244d6231f36, type: 3}
+    packedSpriteRenderDataKeys:
+    - d1a7db056637f4abcb531eb540fd2321: 21300000
+    - f3024e074b3a442edab7b7ca5110633f: 21300000
+    - aa350a0d8137b49f69eb478566b4bca4: 21300000
+    - 79b8a1feb2f6e426abd42c03471247e6: 21300000
+    - c86517255a1794509a2aad11611a9dfd: 21300000
+    - ffa6a259d01f44b5eb36f7f9ae1b458c: 21300000
+    - e01274bfd03a64d8e9936b0758b8278e: 21300000
+    - bd542e04a5da047608603d9f026ceb2f: 21300000
+    - 49ae3b5b063cc40159199c2d659404a8: 21300000
+    - 473f8500bea9a4c6eb767c100b1ee1b6: 21300000
+    - abdaef508446b428f93e5720ea040f63: 21300000
+    - 6148de3af755844dabad95eb89ceb36d: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: d1a7db056637f4abcb531eb540fd2321, type: 3}
+  - {fileID: 21300000, guid: f3024e074b3a442edab7b7ca5110633f, type: 3}
+  - {fileID: 21300000, guid: aa350a0d8137b49f69eb478566b4bca4, type: 3}
+  - {fileID: 21300000, guid: 79b8a1feb2f6e426abd42c03471247e6, type: 3}
+  - {fileID: 21300000, guid: c86517255a1794509a2aad11611a9dfd, type: 3}
+  - {fileID: 21300000, guid: ffa6a259d01f44b5eb36f7f9ae1b458c, type: 3}
+  - {fileID: 21300000, guid: e01274bfd03a64d8e9936b0758b8278e, type: 3}
+  - {fileID: 21300000, guid: bd542e04a5da047608603d9f026ceb2f, type: 3}
+  - {fileID: 21300000, guid: 49ae3b5b063cc40159199c2d659404a8, type: 3}
+  - {fileID: 21300000, guid: 473f8500bea9a4c6eb767c100b1ee1b6, type: 3}
+  - {fileID: 21300000, guid: abdaef508446b428f93e5720ea040f63, type: 3}
+  - {fileID: 21300000, guid: 6148de3af755844dabad95eb89ceb36d, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - kart_cruiser_04
+  - kart_cruiser_05
+  - kart_cruiser_06
+  - kart_cruiser_07
+  - kart_cruiser_00
+  - kart_cruiser_01
+  - kart_cruiser_02
+  - kart_cruiser_03
+  - kart_cruiser_11
+  - kart_cruiser_10
+  - kart_cruiser_08
+  - kart_cruiser_09
+  m_Tag: kart_cruiser
+  m_IsVariant: 0

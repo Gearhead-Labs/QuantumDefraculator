@@ -8,6 +8,6 @@ PhysicMaterial:
   m_Name: Collision
   dynamicFriction: 1.2
   staticFriction: 1.2
-  bounciness: 0.2
-  frictionCombine: 0
-  bounceCombine: 0
+  bounciness: 0
+  frictionCombine: 1
+  bounceCombine: 1

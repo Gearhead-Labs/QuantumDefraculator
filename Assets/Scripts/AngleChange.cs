@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//enum SpriteType { kart_cruiser_00, kart_cruiser_01, kart_cruiser_02, kart_cruiser_03, kart_cruiser_4,
+//	kart_cruiser_05, kart_cruiser_06, kart_cruiser_07, kart_cruiser_08, kart_cruiser_09,
+//	kart_cruiser_10, kart_cruiser_11 }
+
 public class AngleChange : MonoBehaviour {
 
 	public Sprite Angle0;
@@ -27,7 +31,7 @@ public class AngleChange : MonoBehaviour {
 		CameraAngle = Camera.main.transform.eulerAngles.y; // 0 to 360 on opponent
 
 		float RawAngle = 360 - CameraAngle + ParentAngle; // divide by 30, round to int
-		print(RawAngle);
+//		print(RawAngle);
 		RenderAngles(RawAngle);
 
 	} 

@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour {
 
 	public Transform target;
 	public float lookSmooth = 0.09f;
-	public Vector3 offsetFromTarget = new Vector3(0, 3, -5);
+	public Vector3 offsetFromTarget = new Vector3(0, 1, -3);
 	public float xTilt = 15;
 
 	Vector3 destination = Vector3.zero;

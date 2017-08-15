@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Controller : MonoBehaviour {
+public class AIController : MonoBehaviour {
 
 	Rigidbody rBody;
 
@@ -30,30 +30,26 @@ public class Controller : MonoBehaviour {
 		forwardInput = turnInput = 0;
 	}
 
-	void GetInput() {
-		forwardInput = Input.GetAxis ("Vertical");
-		turnInput = Input.GetAxis ("Horizontal");
+	void Decide () {
+		forwardInput = 1;
+		turnInput = Random.value/2;
 	}
 
-		
+
 
 	void Update () {
-		GetInput ();
+		Decide ();
 		Turn ();
-
+		LockYAxis ();
 	}
 
 	void FixedUpdate() {
+		Run ();
 
-		LockYAxis ();
-		Move ();
 	}
 
-
-
-	void Move() {
+	void Run() {
 		if (Mathf.Abs (forwardInput) > inputDelay) {
-
 			//move
 			rBody.velocity = transform.forward * forwardInput * forwardVel;
 		} else {
@@ -63,14 +59,11 @@ public class Controller : MonoBehaviour {
 		}
 	}
 
-    void Turn() {
-        if (rBody.velocity != Vector3.zero)
-        { 
-            if (Mathf.Abs(turnInput) > inputDelay) {
-                targetRotation *= Quaternion.AngleAxis(rotateVel * turnInput * Time.deltaTime, Vector3.up);
-            }
-        transform.rotation = targetRotation;
-        }
+	void Turn() {
+		if (Mathf.Abs (turnInput) > inputDelay) {
+			targetRotation *= Quaternion.AngleAxis (rotateVel * turnInput * Time.deltaTime, Vector3.up);
+		}
+		transform.rotation = targetRotation;
 	}
 
 	void LockYAxis () // Make sure the karts don't fall out of rotation
@@ -78,9 +71,6 @@ public class Controller : MonoBehaviour {
 		Vector3 pos = transform.position;
 		pos.y = 1f;
 		transform.position = pos;
-		Quaternion rot = transform.rotation;
-		rot.y = 0;
-		transform.rotation = rot;
 	}
 
 }
