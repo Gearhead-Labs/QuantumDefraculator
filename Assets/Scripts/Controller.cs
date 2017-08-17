@@ -5,8 +5,9 @@ public class Controller : MonoBehaviour {
 
 	Rigidbody rBody;
 
-	float forwardInput, turnInput;
-
+	float currentForwardInput, lastForwardInput, turnInput;
+	Vector3 driftVector;
+	bool driftStart, drift;
 	Quaternion targetRotation;
 	public Quaternion TargetRotation {
 		get { return targetRotation; }
@@ -14,9 +15,12 @@ public class Controller : MonoBehaviour {
 
 
 	public float inputDelay = 0.1f;
-	public float forwardVel = 20f;
+	public float maxVel = 35f;
 	public float rotateVel = 100f;
+	public float accelRate = 0.7f;
 
+
+	float forwardVel = 0f;
 
 
 	void Start () {
@@ -27,60 +31,84 @@ public class Controller : MonoBehaviour {
 		} else {
 			Debug.LogError ("No rigidbody");
 		}
-		forwardInput = turnInput = 0;
+		currentForwardInput = lastForwardInput = turnInput = 0;
 	}
 
 	void GetInput() {
-		forwardInput = Input.GetAxis ("Vertical");
+		currentForwardInput = Input.GetAxis ("Vertical");
 		turnInput = Input.GetAxis ("Horizontal");
+		driftStart = Input.GetKeyDown (KeyCode.Z);
+		drift = Input.GetKey (KeyCode.Z);
 	}
 
 		
 
 	void Update () {
 		GetInput ();
+		Move ();
 		Turn ();
+		LockYAxis ();
 
 	}
 
 	void FixedUpdate() {
+		
 
-		LockYAxis ();
-		Move ();
 	}
 
 
 
 	void Move() {
-		if (Mathf.Abs (forwardInput) > inputDelay) {
+		if (driftStart) {
+			driftVector = transform.forward;
+//			
+		}
+		if ((currentForwardInput > lastForwardInput) || (currentForwardInput == 1)) {
+			if (forwardVel < maxVel) {
+				forwardVel += accelRate;
+			}
 
-			//move
-			rBody.velocity = transform.forward * forwardInput * forwardVel;
-		} else {
-			//stop
-			rBody.velocity = Vector3.zero;
+			if (drift) {
+				rBody.velocity = driftVector * (1 + Mathf.Pow (currentForwardInput, 2)) * forwardVel;
+			} else {
+				rBody.velocity = transform.forward * (1 + Mathf.Pow (currentForwardInput, 2)) * forwardVel;
+			}
+			print ("go go");
+		} else if ((currentForwardInput < lastForwardInput) || (currentForwardInput == 0)) {
+			 // coming to a stop
+			if (forwardVel > 0f) {
+				forwardVel -= accelRate;	
+				if (drift) {
+					rBody.velocity = driftVector * forwardVel * 2f;
+				} else {
+					rBody.velocity = transform.forward * forwardVel * 2f;
+				}
+				print ("stopping");
+			} else {
+				forwardVel = 0f;
+				rBody.velocity = Vector3.zero;
+			}
 
 		}
+		lastForwardInput = currentForwardInput;
 	}
+
+
 
     void Turn() {
-        if (rBody.velocity != Vector3.zero)
-        { 
-            if (Mathf.Abs(turnInput) > inputDelay) {
-                targetRotation *= Quaternion.AngleAxis(rotateVel * turnInput * Time.deltaTime, Vector3.up);
-            }
-        transform.rotation = targetRotation;
-        }
+//		if (rBody.velocity.magnitude > 4f)
+//        { 
+		targetRotation *= Quaternion.AngleAxis (rotateVel * turnInput * forwardVel/maxVel * Time.deltaTime, Vector3.up);   
+
+		transform.rotation = targetRotation;
 	}
 
-	void LockYAxis () // Make sure the karts don't fall out of rotation
+	void LockYAxis () // Make sure the karts don't levitate
 	{
 		Vector3 pos = transform.position;
 		pos.y = 1f;
 		transform.position = pos;
-		Quaternion rot = transform.rotation;
-		rot.y = 0;
-		transform.rotation = rot;
+
 	}
 
 }
