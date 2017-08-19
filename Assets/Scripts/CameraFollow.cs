@@ -9,6 +9,8 @@ public class CameraFollow : MonoBehaviour {
 	public Vector3 offsetFromTarget = new Vector3(0, 1, -3);
 	public float xTilt = 15;
 
+	float zoomFactor = 1.2f;
+	Vector3 finalOffset;
 	Vector3 destination = Vector3.zero;
 	Controller charController;
 	float rotateVel = 0;
@@ -39,9 +41,26 @@ public class CameraFollow : MonoBehaviour {
 		LookAtTarget();
 	}
 	void MoveToTarget() {
-		destination = charController.TargetRotation * offsetFromTarget;
+		finalOffset = offsetFromTarget;
+		float offsetPlus = 1f;
+		if (charController.Propelling)
+		{
+			if (offsetPlus < 1.5f)
+			{
+				offsetPlus += 0.05f;
+			}
+			finalOffset *= offsetPlus;
+		} else
+		{
+			if (offsetPlus > 1f)
+			{
+				offsetPlus -= 0.1f;
+			}
+		}
+		destination = charController.TargetRotation * finalOffset;
 		destination += target.position;
 		transform.position = destination;
+
 	}
 
 	void LookAtTarget() {

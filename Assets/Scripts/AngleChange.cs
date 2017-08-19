@@ -27,17 +27,17 @@ public class AngleChange : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		ParentAngle = gameObject.transform.parent.eulerAngles.y; // 0 to 360 on camera/player
-		CameraAngle = Camera.main.transform.eulerAngles.y; // 0 to 360 on opponent
+		ParentAngle = gameObject.transform.parent.eulerAngles.y; // 0 to 360 on kart
+		CameraAngle = Camera.main.transform.eulerAngles.y; // 0 to 360 on camera
 
-		float RawAngle = 360 - CameraAngle + ParentAngle; // divide by 30, round to int
+		float RawAngle = 360 - CameraAngle + ParentAngle; 
 //		print(RawAngle);
 		RenderAngles(RawAngle);
 
 	} 
 
 	void RenderAngles (float RawAngle) {
-		// TO FIX: Perspective view makes far-away objects turn when only camera turns.
+		// TO FIX: Perspective view makes far-away objects turn even when only camera turns.
 		float AngleNumber;
 		if (RawAngle >= 165 && RawAngle <= 195) {
 			AngleNumber = 6;
