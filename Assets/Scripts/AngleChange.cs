@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class AngleChange : MonoBehaviour {
 
+	//==( VARIABLES )=========================================================//
 	public Sprite Angle0;
 	public Sprite Angle1;
 	public Sprite Angle2;
@@ -24,7 +25,8 @@ public class AngleChange : MonoBehaviour {
 	float ParentAngle;
 	float CameraAngle;
 
-	// Update is called once per frame
+	//==( FUNCTIONS )=========================================================//
+
 	void Update ()
 	{
 		ParentAngle = gameObject.transform.parent.eulerAngles.y; // 0 to 360 on kart

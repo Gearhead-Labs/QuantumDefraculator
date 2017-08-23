@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class KartEffects : MonoBehaviour {
 
+	//==( VARIABLES )=========================================================//
 	Controller myController;
 	ParticleSystem myParticleSystem;
-	// Use this for initialization
+	//==( FUNCTIONS )=========================================================//
 	void Start ()
 	{
 		myController = gameObject.GetComponentInParent<Controller> ();
 		myParticleSystem = gameObject.GetComponent<ParticleSystem> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update ()
 	{
 		if (myController.Propelling)

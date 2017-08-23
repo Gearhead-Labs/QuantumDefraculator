@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour {
 
+	//==( VARIABLES )=========================================================//
+
 	Rigidbody rBody;
 
 	float forwardInput, turnInput;
@@ -17,7 +19,7 @@ public class AIController : MonoBehaviour {
 	public float forwardVel = 20f;
 	public float rotateVel = 100f;
 
-
+	//==( FUNCTIONS )=========================================================//
 
 	void Start () {
 		// locate player

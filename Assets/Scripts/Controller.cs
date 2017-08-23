@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour {
 
-
+	//==( VARIABLES )=========================================================//
 	Rigidbody rBody;
 	BoxCollider2D groundCollider;
 
 	float currentForwardInput, lastForwardInput, turnInput, friction;
 	float szechuanForce;
 	float forwardVel;
-	Vector3 driftVector;
-	bool onTrack, refill, propel;
+	Vector3 lastDriftVector, driftVector;
+	bool onTrack, refill;
+	float propel;
 
 	Quaternion targetRotation;
 	public Quaternion TargetRotation {
@@ -24,6 +25,7 @@ public class Controller : MonoBehaviour {
 	public float MaxVel = 15f;
 	public float RotateVel = 100f;
 	public float AccelRate = 0.7f;
+	public float DriftFactor = 2f;
 
 	// For other scripts
 	public float ActualSpeed; // for Speedometer
@@ -44,42 +46,37 @@ public class Controller : MonoBehaviour {
 		currentForwardInput = lastForwardInput = turnInput = forwardVel = 0;
 		szechuanForce = friction = 1f;
 		groundCollider = gameObject.GetComponentInChildren<BoxCollider2D> ();
-
 	}
-
-	void GetInput() {
-		currentForwardInput = Input.GetAxis ("Vertical");
-		turnInput = Input.GetAxis ("Horizontal");
-		DriftInput = Input.GetAxis ("Drift");
-		propel = Input.GetKey (KeyCode.C);
-		refill = Input.GetKey (KeyCode.A);
-
-	}
-
 		
-
 	void Update () {
 		GetInput ();
 		CheckTerrain ();
 		CheckSzechuan ();
 		Move ();
 		Turn ();
-
 	}
 
-	void FixedUpdate() {
-		
+	//==( FUNCTIONS )==============================================================//
+	void GetInput() {
+		currentForwardInput = Input.GetAxis ("Vertical");
+		turnInput = Input.GetAxis ("Horizontal");
+		DriftInput = Input.GetAxis ("Drift");
+		propel = Input.GetAxis ("Propel");
+		refill = Input.GetKey (KeyCode.A);
 
 	}
-
-
 
 	void Move() {
 		// Drifting
-		if ((DriftInput > 0) && (LastDriftInput == 0)) // freeze forward at keydown
+		// When drift down
+		if ((DriftInput > LastDriftInput) || (DriftInput == 1))
 		{
-			driftVector = transform.forward;
-		} else if ((DriftInput < LastDriftInput) || (DriftInput == 0)) // update forward if key released
+			if (LastDriftInput == 0) // at keydown, freeze forward vector
+			{
+				driftVector = transform.forward;
+			}
+
+		} else if ((DriftInput < LastDriftInput) || (DriftInput == 0)) // update forward continuously
 		{
 			driftVector = transform.forward;
 		}
@@ -87,16 +84,13 @@ public class Controller : MonoBehaviour {
 		// Szechuan boosting - see CheckSzechuan function
 		if (Propelling)
 		{
-			if (szechuanForce < 1.5f)
-			{
-				szechuanForce += 0.01f;
-			}
-		} else
+			if (szechuanForce < 1.5f)	{ szechuanForce += 0.05f; 	}
+			else 						{ szechuanForce = 1.5f;		}
+		}
+		else
 		{
-			if (szechuanForce > 1f)
-			{
-				szechuanForce -= 0.1f;
-			}
+			if (szechuanForce > 1f) 	{ szechuanForce -= 0.01f;	}
+			else 						{ szechuanForce = 1f; 		}
 		}
 
 		if ((currentForwardInput > lastForwardInput) || (currentForwardInput == 1))
@@ -118,13 +112,16 @@ public class Controller : MonoBehaviour {
 				rBody.velocity = Vector3.zero;
 			}
 		}
+
 		rBody.velocity = driftVector * forwardVel * szechuanForce
 			* friction * (1 + Mathf.Pow (currentForwardInput, 2));
-		
+
 		lastForwardInput = currentForwardInput;
 		LastDriftInput = DriftInput;
+		lastDriftVector = driftVector;
+
 		ActualSpeed = rBody.velocity.magnitude;
-		transform.forward = driftVector;
+
 	}
 
 
@@ -146,8 +143,6 @@ public class Controller : MonoBehaviour {
 			
 		if (onTrack) {
 			print ("I'm On Track");
-		} else if (!onTrack) {
-			print ("where am i");
 		}
 	}
 
@@ -159,14 +154,15 @@ public class Controller : MonoBehaviour {
 			SzechuanMeter = 100f;
 		}
 			
-		if ((propel) && (SzechuanMeter > 0))
+		if ((propel > InputDelay) && (SzechuanMeter > 0))
 		{
 			Propelling = true;
 			SzechuanMeter -= 1f;
 		} else {
 			Propelling = false;
 		}
-//		szechuanForce *= szechuanFactor; // this Factor is for future
+		// szechuanForce *= szechuanFactor;
+		// this is for future (hold boost for long = boost harder)
 	
 		
 			
