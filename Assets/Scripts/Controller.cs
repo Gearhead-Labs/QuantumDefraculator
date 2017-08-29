@@ -10,8 +10,8 @@ public class Controller : MonoBehaviour {
 	float currentForwardInput, lastForwardInput, turnInput, friction;
 	float szechuanForce;
 	float forwardVel;
-	Vector3 lastDriftVector, driftVector;
-	bool onTrack, refill;
+	Vector3 driftVector;
+	bool onTrack;
 	float propel;
 
 	Quaternion targetRotation;
@@ -62,7 +62,6 @@ public class Controller : MonoBehaviour {
 		turnInput = Input.GetAxis ("Horizontal");
 		DriftInput = Input.GetAxis ("Drift");
 		propel = Input.GetAxis ("Propel");
-		refill = Input.GetKey (KeyCode.A);
 
 	}
 
@@ -118,7 +117,7 @@ public class Controller : MonoBehaviour {
 
 		lastForwardInput = currentForwardInput;
 		LastDriftInput = DriftInput;
-		lastDriftVector = driftVector;
+
 
 		ActualSpeed = rBody.velocity.magnitude;
 
@@ -149,10 +148,6 @@ public class Controller : MonoBehaviour {
 	void CheckSzechuan ()
 	{
 //		float szechuanFactor = 1f;
-		if (refill) // temporary button before we have the actual item
-		{
-			SzechuanMeter = 100f;
-		}
 			
 		if ((propel > InputDelay) && (SzechuanMeter > 0))
 		{

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour {
+public class ItemCollide: MonoBehaviour {
 
 	//==( VARIABLES )=========================================================//
 	Collider playerCollider;
 	SpriteRenderer mySprite;
+	ItemType item;
 
 	float oscillationAmplitude = 0.02f;
 	float oscillationSpeed = 2f;
@@ -42,12 +43,14 @@ public class Item : MonoBehaviour {
 			}
 		}
 	}
-		
+
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.CompareTag ("Player"))
 		{
-			other.GetComponent<Controller> ().SzechuanMeter += 100f;
+			item = gameObject.GetComponentInParent<ItemManager> ().RandomItem();
+
+			//other.;
 			mySprite.color = Color.clear;
 			gameObject.GetComponent<SphereCollider> ().isTrigger = false;
 			LightFlash ();
@@ -55,7 +58,7 @@ public class Item : MonoBehaviour {
 	}
 
 	void LightFlash () {
-		
+
 	}
 
 }
